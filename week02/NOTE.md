@@ -414,6 +414,10 @@ P: 一个有限产生式集合
     - Null
     - Symbol
 
+## 心得：
+
+# 吐血ING . . .
+
 ## 参考资料:
 
 1. [乔姆斯基谱系](https://zh.wikipedia.org/wiki/%E4%B9%94%E5%A7%86%E6%96%AF%E5%9F%BA%E8%B0%B1%E7%B3%BB)
