@@ -243,6 +243,8 @@ P: 一个有限产生式集合
         > Value = sign * exponent * fraction
 
         > 二进制浮点数是以符号数值表示法的格式存储——最高有效位被指定为符号位（sign bit）；“指数部分”，即次高有效的e个比特，存储指数部分；最后剩下的f个低有效位的比特，存储“有效数”（significand）的小数部分（在非规约形式下整数部分默认为0，其他情况下一律默认为1）。
+
+        > 精度比较：转成整数
       - Grammar
         - (十进制)DecimalLiteral
           - 0
@@ -322,8 +324,21 @@ P: 一个有限产生式集合
         HexDigit :: one of
           0 1 2 3 4 5 6 7 8 9 a b c d e f A B C D E F
         ```
-    - Boolean
     - String
+      - Encoding
+        - ASCII 0-198
+        - Unicode
+        - UCS U+0000-U+FFFF (Unicode BMP范围)
+        - GB (ASCII+中文)
+          - GB2312
+          - GBK(GB13000)
+          - GB18030
+        - ISO-8859 (ASCII+国际标准字符)
+        - BIG5 (ASCII+繁体中文)
+        > 所有标准都包含ASCII字符
+      - Grammar
+
+    - Boolean
     - Object
     - Undefined
     - Null
