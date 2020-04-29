@@ -97,7 +97,7 @@ CallExpression :
 new foo()['b'] => new foo (MemberExpression) => new foo() (CallExpression) => new foo()['b'] (CallExpression)
 ```
 
-### Right HandSide
+### Right HandSide 右值表达式
 
 #### Update Expressions
 
@@ -353,4 +353,29 @@ Object.getPrototypeOf(Object(Symbol(1)))  === Symbol.prototype
 "1" + {valueOf(){return 2},toString(){return '3'}} => '12'
 "1" + {[Symbol.toPrimitive](){return 1},valueOf(){return 2}} => '11'
 "1" + {[Symbol.toPrimitive](){return },valueOf(){return 2}} => '1undefined'
+```
+
+## 总结
+
+### 右值表达式优先级
+
+|                |          |         |          |     |     |     |     |         |
+| -------------- | -------- | ------- | -------- | --- | --- | --- | --- | ------- |
+| Update         | a++ a--  | ++a --a |          |     |     |     |     |         |
+| Unary          | delete a | void a  | typeof a | +a  | -a  | ~a  | !a  | await a |
+| Exponentiation | \*\*     |         |          |     |     |     |     |         |
+| Multiplicative | \*       | /       | %        |     |     |     |     |         |
+| Additive       | +        | -       |          |     |     |     |     |         |
+| Shift          | <<       | >>      | >>>      |     |     |     |     |         |
+| RelationShip   | >        | <       | >=       | <=  |     |     |     |         |
+| Equlity        | ==       | ===     | !=       | !== |     |     |     |         |
+| Bitwise        | &        | ^       | \|       |     |     |     |     |         |
+| Logical        | &&       | \|\|    |          |     |     |     |     |         |
+| Conditional    | ?:       |         |          |     |     |     |     |         |
+```
+注意：
+1. 位移运算优先级比关系运算符优先级大，比加法优先级小
+例： 1+1>>1  => (1+1)>>1  => 1
+2. 位运算符优先级比逻辑运算符大，比等于运算符小
+例： 1&1==1  => 1&(1==1)  =>  1
 ```
