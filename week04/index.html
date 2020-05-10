@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      overflow: hidden;
+    }
+  </style>
+</head>
+
+<body>
+</body>
+<script src="https://gw.alipayobjects.com/os/antv/pkg/_antv.g6-3.4.9/dist/g6.min.js"></script>
+<script src="./Realm.js"></script>
+<script>
+  const data = {
+    id: 0,
+    label: 'window'
+  };
+  const arr = [data];
+  for (const realm of realms) {
+    // if (realm.type === 'function') {
+    //   continue;
+    // }
+    arr[realm.id] = Object.assign({}, arr[realm.id], {
+      id: realm.id,
+      label: realm.ref ? arr[realm.ref].label : realm.path,
+      parent: realm.parent
+    });
+    let parent = realm.parent || 0;
+    if (!arr[parent]) {
+      arr[parent] = {}
+    }
+    if (!arr[parent].children) {
+      arr[parent].children = [];
+    }
+    arr[parent].children.push(arr[realm.id])
+  }
+
+  const graph = new G6.TreeGraph({
+    container: document.body,
+    width: window.innerWidth,
+    height: window.innerHeight,
+    pixelRatio: 2,
+    linkCenter: true,
+    modes: {
+      default: [
+        // {
+        //   type: 'collapse-expand',
+        //   onChange: function onChange(item, collapsed) {
+        //     // const data = item.get('model').data;
+        //     // data.collapsed = collapsed;
+        //     return false;
+        //   },
+        // },
+        'drag-canvas',
+        'zoom-canvas',
+      ],
+    },
+    defaultNode: {
+      size: 26,
+      anchorPoints: [
+        [0, 0.5],
+        [1, 0.5],
+      ],
+      style: {
+        fill: '#C6E5FF',
+        stroke: '#5B8FF9',
+      },
+    },
+    defaultEdge: {
+      type: 'cubic-horizontal',
+      style: {
+        stroke: '#A3B1BF',
+      },
+    },
+    layout: {
+      // type: 'mindmap',
+      // direction: 'H',
+      type: 'dendrogram',
+      direction: 'LR',
+      radial: true
+    },
+  });
+
+
+  let centerX = 0;
+  graph.node(function (node) {
+    if (node.id === 'Modeling Methods') {
+      centerX = node.x;
+    }
+
+    return {
+      label: node.label,
+      labelCfg: {
+        position: node.children && node.children.length > 0 ?
+          'left' : node.x > centerX ?
+          'right' : 'left',
+        offset: 5,
+      },
+    };
+  });
+
+  graph.data(data);
+  graph.render();
+  graph.fitView();
+</script>
+
+</html>
