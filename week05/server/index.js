@@ -1,4 +1,6 @@
 const http = require('http');
+const fs = require('fs')
+const path = require('path');
 
 const server = http.createServer(function (req, resp) {
   var jsonData = "";
@@ -6,9 +8,13 @@ const server = http.createServer(function (req, resp) {
     jsonData += chunk;
   });
   req.on('end', function () {
-    console.log(jsonData)
     resp.setHeader('Transfer-Encoding', 'chunked');
-    resp.end('ok');
+    try {
+      const file = fs.readFileSync(path.resolve(__dirname, req.url === '/' ? './static/index.html' : `./static${req.url}`));
+      resp.end(file);
+    } catch (e) {
+      console.error("cannot found file：" + e.path);
+    }
   })
 })
 
