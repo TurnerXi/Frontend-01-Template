@@ -1,5 +1,5 @@
 module.exports = function match(pattern, string) {
-  return strStr(string,pattern) === 0;
+  return strStr(string,pattern) >= 0;
 }
 
 var strStr = function(string, pattern) {
