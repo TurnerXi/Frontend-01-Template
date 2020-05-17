@@ -1,5 +1,6 @@
 const Request = require('./request.js');
 const HtmlParser = require('./htmlParser.js');
+const htmlParser = new HtmlParser();
 
 const request = new Request({
   host: '127.0.0.1',
@@ -12,5 +13,5 @@ const request = new Request({
 request.post('/', {
   name: 'TurnerXi'
 }).then(data => {
-  console.log(data);
+  htmlParser.parse(data.body);
 })

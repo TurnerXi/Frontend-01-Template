@@ -126,8 +126,8 @@ class TrunkedBodyParser {
     if (c === '\r') {
       this.currentStatus = this.HANDING_LENGTH_LINE_END;
     } else {
-      this.currentLen *= 10;
-      this.currentLen += (c.charCodeAt() - '0'.charCodeAt());
+      this.currentLen *= 16;
+      this.currentLen += parseInt(c, 16);
     }
   }
 

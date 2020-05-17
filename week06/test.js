@@ -1,5 +1,5 @@
 const assert = require('assert').strict;
-const match = require('./pattern.js');
+const match = require('./pattern2.js');
 const letters = 'abcdefghijklmnopqrstuvwxyz1234567890！@#￥%……&*（）';
 const patterns = [];
 const strings = [];
