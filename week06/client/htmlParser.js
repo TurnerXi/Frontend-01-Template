@@ -1,10 +1,16 @@
+const CSSParser = require('./cssParser');
 const EOF = Symbol('EOF');
-module.exports = class htmlParser {
+
+module.exports = class HtmlParser {
   constructor() {
+    this.cssParser = new CSSParser();
     this.returnState = null;
     this.currentToken = null;
-    this.currentAttribute = null;
-    this.text = '';
+    this.currentAttribute = {
+      name: '',
+      value: ''
+    };
+    this.currentTextNode = null;
     this.stack = [{
       name: 'document',
       children: []
@@ -17,6 +23,7 @@ module.exports = class htmlParser {
       this.state = this.state.call(this, c);
     }
     this.state = this.state.call(this, EOF);
+    console.log(this.stack[0]);
   }
 
   parseData(c) {
@@ -33,7 +40,7 @@ module.exports = class htmlParser {
     } else {
       this.emit({
         type: 'TEXT',
-        content: ''
+        content: c
       });
     }
     return this.parseData;
@@ -72,7 +79,7 @@ module.exports = class htmlParser {
       this.emit(this.currentToken);
       return this.parseData;
     } else {
-      this.currentToken.tagName = '';
+      this.currentToken.tagName += c;
       return this.parseTagName;
     }
   }
@@ -159,9 +166,18 @@ module.exports = class htmlParser {
       });
       return this.parseAttributeValueUnquoted;
     } else if ('\t\n\r '.indexOf(c) > -1) {
-      this.emitAttribute();
+      this.currentToken[this.currentAttribute.name] = this.currentAttribute.value;
+      this.currentAttribute = {
+        name: '',
+        value: ''
+      };
       return this.parseBeforeAttributeName;
     } else if (c === '>') {
+      this.currentToken[this.currentAttribute.name] = this.currentAttribute.value;
+      this.currentAttribute = {
+        name: '',
+        value: ''
+      };
       this.emit(this.currentToken);
       return this.parseData;
     } else if ('"\'<=`'.indexOf(c) > -1) {
@@ -178,7 +194,11 @@ module.exports = class htmlParser {
         type: 'EOF'
       });
     } else if (c === '\'') {
-      this.emitAttribute();
+      this.currentToken[this.currentAttribute.name] = this.currentAttribute.value;
+      this.currentAttribute = {
+        name: '',
+        value: ''
+      };
       return this.parseAfterAttributeValueQuoted;
     } else {
       this.currentAttribute.value += c;
@@ -193,7 +213,11 @@ module.exports = class htmlParser {
         type: 'EOF'
       });
     } else if (c === '"') {
-      this.emitAttribute();
+      this.currentToken[this.currentAttribute.name] = this.currentAttribute.value;
+      this.currentAttribute = {
+        name: '',
+        value: ''
+      };
       return this.parseAfterAttributeValueQuoted;
     } else {
       this.currentAttribute.value += c;
@@ -259,52 +283,70 @@ module.exports = class htmlParser {
   // }
 
   emit(token) {
+    let top = this.stack[this.stack.length - 1];
     if (token.type === 'EOF') {
-      this.emitAttribute();
-      this.emitText();
+      return;
     } else if (token.type === 'TEXT') {
-      this.text += token.content;
+      if (this.currentTextNode === null) {
+        this.currentTextNode = {
+          type: 'text',
+          content: ''
+        }
+        top.children.push(this.currentTextNode);
+      }
+      this.currentTextNode.content += token.content;
     } else if (token.type === 'START_TAG') {
-      this.emitAttribute();
+      let element = {
+        type: 'element',
+        children: [],
+        attributes: [],
+        tagName: token.tagName
+      }
+
+      const siblings = top.children;
+      let idx = siblings.length - 1;
+      element.previousSibling = siblings[idx];
+      while (siblings[idx] && siblings[idx].type === 'text') {
+        idx--;
+      }
+      element.previousElementSibling = siblings[idx];
+
+      if (element.previousSibling) {
+        element.previousSibling.nextSibling = element;
+      }
+      if (element.previousElementSibling) {
+        element.previousElementSibling.nextElementSibling = element;
+      }
+      element.parent = top;
+
+      for (const p in token) {
+        if (p !== 'type' && p !== 'tagName') {
+          element.attributes.push({
+            name: p,
+            value: token[p]
+          });
+        }
+      }
+      this.cssParser.computeCSS(element);
+
+      top.children.push(element);
+
+      if (!token.isSelfClosing) {
+        this.stack.push(element);
+      }
+
+      this.currentTextNode = null;
     } else if (token.type === 'END_TAG') {
-
-    }
-  }
-
-  emitAttribute() {
-    if (this.currentAttribute.name) {
-      this.currentToken.attrs[this.currentAttribute.name] = this.currentAttribute.value;
-      this.currentAttribute = {
-        name: '',
-        value: ''
-      };
-    }
-  }
-
-  emitText() {
-    if (this.text) {
-      this.currentToken.children.push()
-    }
-  }
-
-  emitCurrentTag() {
-    this.emitAttribute();
-    if (this.currentToken.isEnd) {
-      while (this.stack[this.stack.length - 1].name !== this.currentToken.name) {
+      if (top.tagName === token.tagName) {
+        if (top.tagName === 'style') {
+          this.cssParser.addRules(top.children[0].content);
+        }
         this.stack.pop();
+      } else {
+        throw new Error(`the end tag doesn\`t match the ${top.tagName}!`);
       }
-    } else {
-      const head = this.stack[this.stack.length - 1];
-      if (this.text) {
-        head.children.push(this.text);
-        this.text = '';
-      }
-      head.children.push(this.currentToken);
-      if (!this.currentToken.isSelfClosing) {
-        this.stack.push(this.currentToken);
-      }
-    }
-    console.log(JSON.stringify(this.stack));
-  }
 
+      this.currentTextNode = null;
+    }
+  }
 }
