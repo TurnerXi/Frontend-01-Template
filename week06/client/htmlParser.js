@@ -23,7 +23,7 @@ module.exports = class HtmlParser {
       this.state = this.state.call(this, c);
     }
     this.state = this.state.call(this, EOF);
-    console.log(this.stack[0]);
+    return this.stack[0];
   }
 
   parseData(c) {

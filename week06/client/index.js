@@ -1,5 +1,6 @@
 const Request = require('./request.js');
 const HtmlParser = require('./htmlParser.js');
+const { handleCircular } = require('./utils.js');
 const htmlParser = new HtmlParser();
 
 const request = new Request({
@@ -13,5 +14,6 @@ const request = new Request({
 request.post('/', {
   name: 'TurnerXi'
 }).then(data => {
-  htmlParser.parse(data.body);
+  let dom = htmlParser.parse(data.body);
+  console.log(JSON.stringify(dom, handleCircular, " "));
 })
