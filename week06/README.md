@@ -1,6 +1,7 @@
 # 文件结构说明
 
 ```
+├─index.html                      html可视化解析过程
 ├─client                          客户端目录
 │      cssParser.js                 css内容解析器
 │      htmlParser.js                html内容解析器

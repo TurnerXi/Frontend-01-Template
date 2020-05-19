@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href='http://cdn.repository.webfont.com/webfonts/nomal/132993/48129/5ec428c9f629d80d3cebdfac.css' rel='stylesheet' type='text/css' />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      color: rgb(102, 102, 102);
+      font: 14px/1.5 "Microsoft YaHei", arial, SimSun, 宋体;
+    }
+
+    a,
+    a:hover,
+    a:visited {
+      text-decoration: none;
+    }
+
+    a.btn {
+      padding: 5px 15px;
+      border: 1px solid rgba(0, 142, 255, .2);
+      background-color: rgb(0, 226, 255, .8);
+      border-radius: 2px;
+      color: #fff;
+    }
+
+    a.btn:hover {
+      background: rgb(0, 226, 255, .5);
+    }
+
+    a.btn.stop {
+      background: rgb(233, 30, 99, .8);
+    }
+
+    a.btn.stop:hover {
+      background: rgb(233, 30, 99, .5);
+    }
+
+    textarea {
+      margin: 10px 2%;
+      width: 96%;
+      box-sizing: border-box;
+    }
+
+    #app {
+      text-align: center;
+    }
+
+    .wrapper {
+      position: relative;
+      width: 100%;
+      height: 750px;
+    }
+
+    pre {
+      font-size: 18px;
+      font-family: 'Digital-7-Italic';
+      position: absolute;
+      width: 100%;
+      width: 50%;
+    }
+
+    pre.left {
+      text-align: left;
+      left: 0;
+    }
+
+    pre.right {
+      color: #f40;
+      text-align: right;
+      right: 0;
+    }
+
+    .chart {
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="app">
+    <div class="wrapper">
+      <pre class="left">{{content}}</pre>
+      <pre class="right">{{content1}}</pre>
+      <div ref="chart" class="chart"></div>
+    </div>
+    <textarea name="html" rows="10" v-model="html"></textarea>
+    <label for="velocity">速度</label>
+    <select id="velocity" v-model="velocity">
+      <option value="5">5</option>
+      <option value="10">10</option>
+      <option value="20">20</option>
+      <option value="50">50</option>
+      <option value="100">100</option>
+    </select>
+    <a class="btn" v-if="!isParsing" href="javascript:;" @click="start">开始</a>
+    <a class="btn stop" v-else href="javascript:;" @click="stop">停止</a>
+  </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://gw.alipayobjects.com/os/antv/pkg/_antv.g6-3.4.7/dist/g6.min.js"></script>
+<script>
+  const EOF = Symbol('EOF');
+
+  new Vue({
+    el: '#app',
+    data: {
+      html: `
+      <html maaa=a>
+      <head>
+        <style>
+          body div #myid {
+            width: 100px;
+            background-color: #ff5000;
+          }
+          body div>img#myid {
+            width: 30px;
+            background-color: #ff1111;
+          }
+        </style>
+      </head>
+      <body>
+        <div>
+          <img id="myid" />
+          aaaa
+          <img />
+        </div>
+      </body>
+      </html>
+      `,
+      currentToken: null,
+      currentAttribute: { name: '', value: '' },
+      currentTextNode: null,
+      stack: [{ name: 'document', children: [] }],
+      velocity: 10,
+      lastState: '',
+      currentState: '',
+      lastEdge: '',
+      graphData: null,
+      content: '',
+      content1: '',
+      isParsing: false,
+      graph: null,
+      states: [
+        'Data',
+        'TagOpen',
+        'TagName',
+        'BeforeAttributeName',
+        'AttributeName',
+        'AfterAttributeName',
+        'BeforeAttributeValue',
+        'AttributeValueUnquoted',
+        'AttributeValueSingleQuoted',
+        'AttributeValueDoubleQuoted',
+        'AfterAttributeValueQuoted',
+        'SelfClosingStartTag',
+        'EndTagOpen'
+      ],
+      edges: [{ source: '1', target: '2', },
+        { source: '2', target: '13', },
+        { source: '2', target: '3', },
+        { source: '3', target: '1', },
+        { source: '3', target: '4', },
+        { source: '3', target: '12', },
+        { source: '4', target: '5', },
+        { source: '4', target: '6', },
+        { source: '5', target: '6', },
+        { source: '5', target: '7', },
+        { source: '6', target: '1', },
+        { source: '6', target: '5', },
+        { source: '6', target: '7', },
+        { source: '6', target: '12', },
+        { source: '7', target: '1', },
+        { source: '7', target: '8', },
+        { source: '7', target: '9', },
+        { source: '7', target: '10', },
+        { source: '8', target: '1', },
+        { source: '8', target: '4', },
+        { source: '9', target: '11', },
+        { source: '10', target: '11', },
+        { source: '11', target: '1', },
+        { source: '11', target: '4', },
+        { source: '11', target: '12', },
+        { source: '12', target: '1', },
+        { source: '12', target: '4', },
+        { source: '13', target: '1', },
+        { source: '13', target: '3', },
+      ],
+    },
+    watch: {
+      stack: {
+        deep: true,
+        handler(value) {
+          this.content = value[0].children.map(item => this.analyze(item)).join('');
+          this.content1 = this.stack.slice(1).map(element => `<${element.tagName}${element.attributes && element.attributes.length>0 ? (' '+element.attributes.map(item=>`${item.name}='${item.value}'`).join(' ')):''}${element.isSelfClosing&&' /'||''}>`).join('\r\n');
+        }
+      },
+      currentState(value) {
+        const currentid = this.states.indexOf(this.currentState) + 1;
+        if (this.lastState) {
+          const lastid = this.states.indexOf(this.lastState) + 1;
+          this.graph.update(`${lastid}`, { style: { fill: '#C6E5FF' } });
+
+          if (this.lastEdge) {
+            this.graph.setItemState(this.lastEdge, 'running', false);
+          }
+          const edgeid = this.edges.findIndex(item => item.source == lastid && item.target == currentid);
+          if (edgeid >= 0) {
+            this.graph.setItemState(`edge${edgeid}`, 'running', true);
+            this.lastEdge = `edge${edgeid}`;
+          }
+        }
+        this.graph.update(`${currentid}`, { style: { fill: 'blue' } });
+        this.lastState = this.currentState;
+      }
+    },
+    mounted() {
+      this.createGraph();
+    },
+    methods: {
+      async start() {
+        this.stack = [{ name: 'document', children: [] }];
+        this.isParsing = true;
+        await this.parse();
+        this.isParsing = false;
+      },
+      stop() {
+        this.isParsing = false;
+      },
+      async parse() {
+        this.state = this.parseData;
+        for (const c of this.html) {
+          if (!this.isParsing) {
+            return;
+          }
+          await new Promise(resolve => {
+            setTimeout(() => {
+              this.currentState = this.state.name.split(' ').slice(-1)[0].replace('parse', '');
+              this.state = this.state.call(this, c);
+              resolve();
+            }, 1000 / this.velocity);
+          })
+        }
+        this.state = this.state.call(this, EOF);
+      },
+      analyze(element) {
+        if (element.type === 'text') {
+          return `${element.content}`;
+        } else if (element.type === 'element') {
+          let html = `<${element.tagName}${element.attributes.length>0 ? (' '+element.attributes.map(item=>`${item.name}='${item.value}'`).join(' ')):''}${element.isSelfClosing&&' /'||''}>`
+          if (!element.isSelfClosing) {
+            html += `${element.children.map(item=>this.analyze(item)).join('')}`
+            html += `</${element.tagName}>`
+          }
+          return html;
+        } else {
+          return '';
+        }
+      },
+      parseData(c) {
+        if (c === EOF) {
+          this.emit({
+            type: 'EOF'
+          });
+        } else if (c === '<') {
+          return this.parseTagOpen;
+        } else {
+          this.emit({
+            type: 'TEXT',
+            content: c
+          });
+        }
+        return this.parseData;
+      },
+      parseTagOpen(c) {
+        if (c === EOF) {
+          console.error('eof-before-tag-name parse error. ');
+          this.emit({
+            type: 'EOF'
+          });
+          return this.parseTagOpen;
+        } else if (c === '/') {
+          return this.parseEndTagOpen;
+        } else {
+          this.currentToken = {
+            type: 'START_TAG',
+            tagName: ''
+          }
+          return this.parseTagName(c.toLowerCase());
+        }
+      },
+      parseTagName(c) {
+        if (c === EOF) {
+          console.error('eof-in-tag parse error. ');
+          this.emit({
+            type: 'EOF'
+          });
+          return this.parseTagName;
+        } else if ('\t\r\n '.indexOf(c) > -1) {
+          return this.parseBeforeAttributeName;
+        } else if (c === '/') {
+          return this.parseSelfClosingStartTag;
+        } else if (c === '>') {
+          this.emit(this.currentToken);
+          return this.parseData;
+        } else {
+          this.currentToken.tagName += c;
+          return this.parseTagName;
+        }
+      },
+      parseBeforeAttributeName(c) {
+        if (c === EOF || '/>'.indexOf(c) > -1) {
+          return this.parseAfterAttributeName(c);
+        } else if ('\t\r\n '.indexOf(c) > -1) {
+          return this.parseBeforeAttributeName;
+        } else if (c === '=') {
+          console.error('unexpected-equals-sign-before-attribute-name parse error.')
+          this.currentAttribute = {
+            name: c,
+            value: ''
+          }
+          return this.parseAttributeName;
+        } else {
+          this.currentAttribute = {
+            name: '',
+            value: ''
+          }
+          return this.parseAttributeName(c);
+        }
+      },
+      parseAttributeName(c) {
+        if (c === EOF || '\t\r\n >/'.indexOf(c) > -1) {
+          return this.parseAfterAttributeName(c);
+        } else if (c === '=') {
+          return this.parseBeforeAttributeValue;
+        } else if ("\"'<".indexOf(c) > -1) {
+          console.error(' unexpected-character-in-attribute-name parse error.');
+        }
+        this.currentAttribute.name += c;
+        return this.parseAttributeName;
+      },
+      parseAfterAttributeName(c) {
+        if (c === EOF) {
+          console.error(' eof-in-tag parse error.');
+          this.emit({
+            type: 'EOF'
+          });
+          return this.parseAfterAttributeName;
+        } else if ('\t\n\r '.indexOf(c) > -1) {
+          return this.parseAfterAttributeName;
+        } else if (c === '/') {
+          return this.parseSelfClosingStartTag;
+        } else if (c === '=') {
+          return this.parseBeforeAttributeValue;
+        } else if (c === '>') {
+          this.emit(this.currentToken);
+          return this.parseData;
+        } else {
+          this.currentAttribute = {
+            name: '',
+            value: ''
+          }
+          return this.parseAttributeName(c);
+        }
+      },
+      parseBeforeAttributeValue(c) {
+        if ('\t\n\r '.indexOf(c) > -1) {
+          return this.parseBeforeAttributeValue;
+        } else if (c === '"') {
+          return this.parseAttributeValueDoubleQuoted;
+        } else if (c === '\'') {
+          return this.parseAttributeValueSingleQuoted;
+        } else if (c === '>') {
+          console.error('missing-attribute-value parse error.')
+          this.emit(this.currentToken);
+          return this.parseData;
+        } else {
+          return this.parseAttributeValueUnquoted(c);
+        }
+      },
+      parseAttributeValueUnquoted(c) {
+        if (c === EOF) {
+          console.error('eof-in-tag parse error.');
+          this.emit({
+            type: 'EOF'
+          });
+          return this.parseAttributeValueUnquoted;
+        } else if ('\t\n\r '.indexOf(c) > -1) {
+          this.currentToken[this.currentAttribute.name] = this.currentAttribute.value;
+          this.currentAttribute = {
+            name: '',
+            value: ''
+          };
+          return this.parseBeforeAttributeName;
+        } else if (c === '>') {
+          this.currentToken[this.currentAttribute.name] = this.currentAttribute.value;
+          this.currentAttribute = {
+            name: '',
+            value: ''
+          };
+          this.emit(this.currentToken);
+          return this.parseData;
+        } else if ('"\'<=`'.indexOf(c) > -1) {
+          console.error('unexpected-character-in-unquoted-attribute-value parse error. ');
+        }
+        this.currentAttribute.value += c;
+        return this.parseAttributeValueUnquoted;
+      },
+      parseAttributeValueSingleQuoted(c) {
+        if (c === EOF) {
+          console.error('eof-in-tag parse error. ');
+          this.emit({
+            type: 'EOF'
+          });
+        } else if (c === '\'') {
+          this.currentToken[this.currentAttribute.name] = this.currentAttribute.value;
+          this.currentAttribute = {
+            name: '',
+            value: ''
+          };
+          return this.parseAfterAttributeValueQuoted;
+        } else {
+          this.currentAttribute.value += c;
+        }
+        return this.parseAttributeValueSingleQuoted;
+      },
+      parseAttributeValueDoubleQuoted(c) {
+        if (c === EOF) {
+          console.error('eof-in-tag parse error. ');
+          this.emit({
+            type: 'EOF'
+          });
+        } else if (c === '"') {
+          this.currentToken[this.currentAttribute.name] = this.currentAttribute.value;
+          this.currentAttribute = {
+            name: '',
+            value: ''
+          };
+          return this.parseAfterAttributeValueQuoted;
+        } else {
+          this.currentAttribute.value += c;
+        }
+        return this.parseAttributeValueDoubleQuoted;
+      },
+      parseAfterAttributeValueQuoted(c) {
+        if (c === EOF) {
+          console.error('eof-in-tag parse error.');
+          this.emit({
+            type: 'EOF'
+          });
+          return this.parseAfterAttributeValueQuoted;
+        } else if ('\t\n\r '.indexOf(c)) {
+          return this.parseBeforeAttributeName;
+        } else if (c === '/') {
+          return this.parseSelfClosingStartTag;
+        } else if (c === '>') {
+          this.emit(this.currentToken);
+          return this.parseData;
+        } else {
+          console.error(' missing-whitespace-between-attributes parse error. ');
+          return this.parseBeforeAttributeName(c);
+        }
+      },
+      parseSelfClosingStartTag(c) {
+        if (c === '>') {
+          this.currentToken.isSelfClosing = true;
+          this.emit(this.currentToken);
+          return this.parseData;
+        } else if (c === EOF) {
+          console.error('eof-in-tag parse error.');
+          this.emit({
+            type: 'EOF'
+          });
+          return this.parseSelfClosingStartTag;
+        } else {
+          console.error('unexpected-solidus-in-tag parse error. ');
+          return this.parseBeforeAttributeName(c);
+        }
+      },
+      parseEndTagOpen(c) {
+        if (c === EOF) {
+          console.error(' eof-before-tag-name parse error.');
+          return this.parseEndTagOpen;
+        } else if (c === '>') {
+          console.error('missing-end-tag-name parse error. ');
+          return this.parseData;
+        } else {
+          this.currentToken = {
+            type: 'END_TAG',
+            tagName: ''
+          }
+          return this.parseTagName(c);
+        }
+      },
+      emit(token) {
+        let top = this.stack[this.stack.length - 1];
+        if (token.type === 'EOF') {
+          return;
+        } else if (token.type === 'TEXT') {
+          if (this.currentTextNode === null) {
+            this.currentTextNode = {
+              type: 'text',
+              content: ''
+            }
+            top.children.push(this.currentTextNode);
+          }
+          this.currentTextNode.content += token.content;
+        } else if (token.type === 'START_TAG') {
+          let element = {
+            type: 'element',
+            children: [],
+            attributes: [],
+            tagName: token.tagName,
+            isSelfClosing: token.isSelfClosing
+          }
+
+          // const siblings = top.children;
+          // let idx = siblings.length - 1;
+          // element.previousSibling = siblings[idx];
+          // while (siblings[idx] && siblings[idx].type === 'text') {
+          //   idx--;
+          // }
+          // element.previousElementSibling = siblings[idx];
+
+          // if (element.previousSibling) {
+          //   element.previousSibling.nextSibling = element;
+          // }
+          // if (element.previousElementSibling) {
+          //   element.previousElementSibling.nextElementSibling = element;
+          // }
+          // element.parent = top;
+
+          for (const p in token) {
+            if (p !== 'type' && p !== 'tagName' && p !== 'isSelfClosing') {
+              element.attributes.push({
+                name: p,
+                value: token[p]
+              });
+            }
+          }
+          // this.cssParser.computeCSS(element);
+
+          top.children.push(element);
+
+          if (!token.isSelfClosing) {
+            this.stack.push(element);
+          }
+
+          this.currentTextNode = null;
+        } else if (token.type === 'END_TAG') {
+          if (top.tagName === token.tagName) {
+            this.stack.pop();
+          } else {
+            throw new Error(`the end tag doesn\`t match the ${top.tagName}!`);
+          }
+
+          this.currentTextNode = null;
+        }
+      },
+      createGraph() {
+        const chart = this.$refs.chart;
+        const width = chart.offsetWidth;
+        const height = chart.offsetHeight;
+        const nodes = this.states.map((state, idx) => ({ id: `${idx + 1}`, label: state }));
+        const graphData = {
+          nodes: nodes,
+          edges: this.edges.map((item, idx) => {
+            return Object.assign({ id: 'edge' + idx }, item);
+          })
+        }
+
+        const graph = new G6.Graph({
+          container: chart,
+          width: width, // Number，必须，图的宽度
+          height: height, // Number，必须，图的高度
+          modes: {
+            default: ['drag-canvas', 'drag-node', 'click-select'],
+          },
+          layout: {
+            type: 'fruchterman',
+            gravity: 5,
+            speed: 5,
+          },
+          defaultNode: {
+            size: 30,
+            style: {
+              lineWidth: 2,
+              stroke: '#5B8FF9',
+              fill: '#C6E5FF',
+            },
+          },
+          defaultEdge: {
+            size: 1,
+            color: '#e2e2e2',
+            style: {
+              endArrow: {
+                path: 'M 0,0 L 8,4 L 8,-4 Z',
+                fill: '#e2e2e2'
+              },
+            },
+          },
+          edgeStateStyles: {
+            running: {
+              stroke: 'steelblue',
+            },
+          },
+          fitView: true,
+        });
+
+        graph.data(graphData); // 读取 Step 2 中的数据源到图上
+        graph.render(); // 渲染图
+        this.graph = graph;
+      }
+    }
+  })
+</script>
+
+</html>
