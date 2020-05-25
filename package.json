@@ -6,6 +6,7 @@
   "author": "TurnerXi <290944015@qq.com>",
   "license": "MIT",
   "dependencies": {
-    "css": "^2.2.4"
+    "css": "^2.2.4",
+    "images": "^3.0.2"
   }
 }
