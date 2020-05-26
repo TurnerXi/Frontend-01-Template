@@ -6,6 +6,7 @@
   "author": "TurnerXi <290944015@qq.com>",
   "license": "MIT",
   "dependencies": {
+    "cheerio": "^1.0.0-rc.3",
     "css": "^2.2.4",
     "images": "^3.0.2"
   }

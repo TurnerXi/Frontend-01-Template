@@ -1,0 +1,565 @@
+[
+{
+  "name": "css box sizing module level 4",
+  "url": "https://www.w3.org/TR/2020/WD-css-sizing-4-20200526/"
+},
+{
+  "name": "requirements for chinese text layout中文排版需求",
+  "url": "https://www.w3.org/TR/2020/WD-clreq-20200521/"
+},
+{
+  "name": "css display module level 3",
+  "url": "https://www.w3.org/TR/2020/CR-css-display-3-20200519/"
+},
+{
+  "name": "css positioned layout module level 3",
+  "url": "https://www.w3.org/TR/2020/WD-css-position-3-20200519/"
+},
+{
+  "name": "css text decoration module level 4",
+  "url": "https://www.w3.org/TR/2020/WD-css-text-decor-4-20200506/"
+},
+{
+  "name": "css ruby layout module level 1",
+  "url": "https://www.w3.org/TR/2020/WD-css-ruby-1-20200429/"
+},
+{
+  "name": "css text module level 3",
+  "url": "https://www.w3.org/TR/2020/WD-css-text-3-20200429/"
+},
+{
+  "name": "css box model module level 3",
+  "url": "https://www.w3.org/TR/2020/WD-css-box-3-20200421/"
+},
+{
+  "name": "css box model module level 4",
+  "url": "https://www.w3.org/TR/2020/WD-css-box-4-20200421/"
+},
+{
+  "name": "css box alignment module level 3",
+  "url": "https://www.w3.org/TR/2020/WD-css-align-3-20200421/"
+},
+{
+  "name": "css color adjustment module level 1",
+  "url": "https://www.w3.org/TR/2020/WD-css-color-adjust-1-20200402/"
+},
+{
+  "name": "media queries level 5",
+  "url": "https://www.w3.org/TR/2020/WD-mediaqueries-5-20200318/"
+},
+{
+  "name": "css speech module",
+  "url": "https://www.w3.org/TR/2020/CR-css-speech-1-20200310/"
+},
+{
+  "name": "css conditional rules module level 4",
+  "url": "https://www.w3.org/TR/2020/WD-css-conditional-4-20200303/"
+},
+{
+  "name": "css color module level 5",
+  "url": "https://www.w3.org/TR/2020/WD-css-color-5-20200303/"
+},
+{
+  "name": "css transforms module level 2",
+  "url": "https://www.w3.org/TR/2020/WD-css-transforms-2-20200303/"
+},
+{
+  "name": "resize observer",
+  "url": "https://www.w3.org/TR/2020/WD-resize-observer-1-20200211/"
+},
+{
+  "name": "css scroll anchoring module level 1",
+  "url": "https://www.w3.org/TR/2020/WD-css-scroll-anchoring-1-20200211/"
+},
+{
+  "name": "timed text markup language 2 (ttml2) (2nd edition)",
+  "url": "https://www.w3.org/TR/2020/CR-ttml2-20200128/"
+},
+{
+  "name": "css basic user interface module level 4",
+  "url": "https://www.w3.org/TR/2020/WD-css-ui-4-20200124/"
+},
+{
+  "name": "css writing modes level 3",
+  "url": "https://www.w3.org/TR/2019/REC-css-writing-modes-3-20191210/"
+},
+{
+  "name": "css grid layout module level 2",
+  "url": "https://www.w3.org/TR/2019/WD-css-grid-2-20191203/"
+},
+{
+  "name": "css spatial navigation level 1",
+  "url": "https://www.w3.org/TR/2019/WD-css-nav-1-20191126/"
+},
+{
+  "name": "css containment module level 1",
+  "url": "https://www.w3.org/TR/2019/REC-css-contain-1-20191121/"
+},
+{
+  "name": "css text module level 4",
+  "url": "https://www.w3.org/TR/2019/WD-css-text-4-20191113/"
+},
+{
+  "name": "css fonts module level 4",
+  "url": "https://www.w3.org/TR/2019/WD-css-fonts-4-20191113/"
+},
+{
+  "name": "css containment module level 2",
+  "url": "https://www.w3.org/TR/2019/WD-css-contain-2-20191111/"
+},
+{
+  "name": "css color module level 4",
+  "url": "https://www.w3.org/TR/2019/WD-css-color-4-20191105/"
+},
+{
+  "name": "css properties and values api level 1",
+  "url": "https://www.w3.org/TR/2019/WD-css-properties-values-api-1-20191025/"
+},
+{
+  "name": "css multi-column layout module level 1",
+  "url": "https://www.w3.org/TR/2019/WD-css-multicol-1-20191015/"
+},
+{
+  "name": "css images module level 3",
+  "url": "https://www.w3.org/TR/2019/CR-css-images-3-20191010/"
+},
+{
+  "name": "css lists module level 3",
+  "url": "https://www.w3.org/TR/2019/WD-css-lists-3-20190817/"
+},
+{
+  "name": "css text decoration module level 3",
+  "url": "https://www.w3.org/TR/2019/CR-css-text-decor-3-20190813/"
+},
+{
+  "name": "css generated content module level 3",
+  "url": "https://www.w3.org/TR/2019/WD-css-content-3-20190802/"
+},
+{
+  "name": "css writing modes level 4",
+  "url": "https://www.w3.org/TR/2019/CR-css-writing-modes-4-20190730/"
+},
+{
+  "name": "css table module level 3",
+  "url": "https://www.w3.org/TR/2019/WD-css-tables-3-20190727/"
+},
+{
+  "name": "css syntax module level 3",
+  "url": "https://www.w3.org/TR/2019/CR-css-syntax-3-20190716/"
+},
+{
+  "name": "css animation worklet api",
+  "url": "https://www.w3.org/TR/2019/WD-css-animation-worklet-1-20190625/"
+},
+{
+  "name": "css overscroll behavior module level 1",
+  "url": "https://www.w3.org/TR/2019/WD-css-overscroll-1-20190606/"
+},
+{
+  "name": "css values and units module level 3",
+  "url": "https://www.w3.org/TR/2019/CR-css-values-3-20190606/"
+},
+{
+  "name": "css intrinsic & extrinsic sizing module level 3",
+  "url": "https://www.w3.org/TR/2019/WD-css-sizing-3-20190522/"
+},
+{
+  "name": "css easing functions level 1",
+  "url": "https://www.w3.org/TR/2019/CR-css-easing-1-20190430/"
+},
+{
+  "name": "ttml media type definition and profile registry",
+  "url": "https://www.w3.org/TR/2019/NOTE-ttml-profile-registry-20190411/"
+},
+{
+  "name": "webvtt: the web video text tracks format",
+  "url": "https://www.w3.org/TR/2019/CR-webvtt1-20190404/"
+},
+{
+  "name": "non-element selectors module level 1",
+  "url": "https://www.w3.org/TR/2019/NOTE-selectors-nonelement-1-20190402/"
+},
+{
+  "name": "css scroll snap module level 1",
+  "url": "https://www.w3.org/TR/2019/CR-css-scroll-snap-1-20190319/"
+},
+{
+  "name": "css pseudo-elements module level 4",
+  "url": "https://www.w3.org/TR/2019/WD-css-pseudo-4-20190225/"
+},
+{
+  "name": "css transforms module level 1",
+  "url": "https://www.w3.org/TR/2019/CR-css-transforms-1-20190214/"
+},
+{
+  "name": "css values and units module level 4",
+  "url": "https://www.w3.org/TR/2019/WD-css-values-4-20190131/"
+},
+{
+  "name": "css snapshot 2018",
+  "url": "https://www.w3.org/TR/2019/NOTE-css-2018-20190122/"
+},
+{
+  "name": "css fragmentation module level 4",
+  "url": "https://www.w3.org/TR/2018/WD-css-break-4-20181218/"
+},
+{
+  "name": "filter effects module level 1",
+  "url": "https://www.w3.org/TR/2018/WD-filter-effects-1-20181218/"
+},
+{
+  "name": "motion path module level 1",
+  "url": "https://www.w3.org/TR/2018/WD-motion-1-20181218/"
+},
+{
+  "name": "geometry interfaces module level 1",
+  "url": "https://www.w3.org/TR/2018/CR-geometry-1-20181204/"
+},
+{
+  "name": "css fragmentation module level 3",
+  "url": "https://www.w3.org/TR/2018/CR-css-break-3-20181204/"
+},
+{
+  "name": "selectors level 4",
+  "url": "https://www.w3.org/TR/2018/WD-selectors-4-20181121/"
+},
+{
+  "name": "css flexible box layout module level 1",
+  "url": "https://www.w3.org/TR/2018/CR-css-flexbox-1-20181119/"
+},
+{
+  "name": "css shadow parts",
+  "url": "https://www.w3.org/TR/2018/WD-css-shadow-parts-1-20181115/"
+},
+{
+  "name": "selectors level 3",
+  "url": "https://www.w3.org/TR/2018/REC-selectors-3-20181106/"
+},
+{
+  "name": "css paged media module level 3",
+  "url": "https://www.w3.org/TR/2018/WD-css-page-3-20181018/"
+},
+{
+  "name": "css animations level 1",
+  "url": "https://www.w3.org/TR/2018/WD-css-animations-1-20181011/"
+},
+{
+  "name": "css transitions",
+  "url": "https://www.w3.org/TR/2018/WD-css-transitions-1-20181011/"
+},
+{
+  "name": "web animations",
+  "url": "https://www.w3.org/TR/2018/WD-web-animations-1-20181011/"
+},
+{
+  "name": "css scrollbars module level 1",
+  "url": "https://www.w3.org/TR/2018/WD-css-scrollbars-1-20180925/"
+},
+{
+  "name": "css fonts module level 3",
+  "url": "https://www.w3.org/TR/2018/REC-css-fonts-3-20180920/"
+},
+{
+  "name": "cascading style sheets, level 1",
+  "url": "https://www.w3.org/TR/2018/SPSD-CSS1-20180913/"
+},
+{
+  "name": "css cascading and inheritance level 3",
+  "url": "https://www.w3.org/TR/2018/CR-css-cascade-3-20180828/"
+},
+{
+  "name": "css cascading and inheritance level 4",
+  "url": "https://www.w3.org/TR/2018/CR-css-cascade-4-20180828/"
+},
+{
+  "name": "css logical properties and values level 1",
+  "url": "https://www.w3.org/TR/2018/WD-css-logical-1-20180827/"
+},
+{
+  "name": "css painting api level 1",
+  "url": "https://www.w3.org/TR/2018/CR-css-paint-api-1-20180809/"
+},
+{
+  "name": "css inline layout module level 3",
+  "url": "https://www.w3.org/TR/2018/WD-css-inline-3-20180808/"
+},
+{
+  "name": "css overflow module level 3",
+  "url": "https://www.w3.org/TR/2018/WD-css-overflow-3-20180731/"
+},
+{
+  "name": "css basic user interface module level 3 (css3 ui)",
+  "url": "https://www.w3.org/TR/2018/REC-css-ui-3-20180621/"
+},
+{
+  "name": "css color module level 3",
+  "url": "https://www.w3.org/TR/2018/REC-css-color-3-20180619/"
+},
+{
+  "name": "css layout api level 1",
+  "url": "https://www.w3.org/TR/2018/WD-css-layout-api-1-20180412/"
+},
+{
+  "name": "dommatrix interface",
+  "url": "https://www.w3.org/TR/2018/NOTE-matrix-20180412/"
+},
+{
+  "name": "css typed om level 1",
+  "url": "https://www.w3.org/TR/2018/WD-css-typed-om-1-20180410/"
+},
+{
+  "name": "encoding",
+  "url": "https://www.w3.org/TR/2018/CR-encoding-20180327/"
+},
+{
+  "name": "css grid layout module level 1",
+  "url": "https://www.w3.org/TR/2017/CR-css-grid-1-20171214/"
+},
+{
+  "name": "css counter styles level 3",
+  "url": "https://www.w3.org/TR/2017/CR-css-counter-styles-3-20171214/"
+},
+{
+  "name": "css backgrounds and borders module level 3",
+  "url": "https://www.w3.org/TR/2017/CR-css-backgrounds-3-20171017/"
+},
+{
+  "name": "media queries level 4",
+  "url": "https://www.w3.org/TR/2017/CR-mediaqueries-4-20170905/"
+},
+{
+  "name": "css overflow module level 4",
+  "url": "https://www.w3.org/TR/2017/WD-css-overflow-4-20170613/"
+},
+{
+  "name": "css image values and replaced content module level 4",
+  "url": "https://www.w3.org/TR/2017/WD-css-images-4-20170413/"
+},
+{
+  "name": "css fill and stroke module level 3",
+  "url": "https://www.w3.org/TR/2017/WD-fill-stroke-3-20170413/"
+},
+{
+  "name": "css rhythmic sizing",
+  "url": "https://www.w3.org/TR/2017/WD-css-rhythm-1-20170302/"
+},
+{
+  "name": "ready-made counter styles",
+  "url": "https://www.w3.org/TR/2017/NOTE-predefined-counter-styles-20170216/"
+},
+{
+  "name": "css snapshot 2017",
+  "url": "https://www.w3.org/TR/2017/NOTE-css-2017-20170131/"
+},
+{
+  "name": "css round display level 1",
+  "url": "https://www.w3.org/TR/2016/WD-css-round-display-1-20161222/"
+},
+{
+  "name": "ethiopic layout requirements",
+  "url": "https://www.w3.org/TR/2016/WD-elreq-20161115/"
+},
+{
+  "name": "worklets level 1",
+  "url": "http://www.w3.org/TR/2016/WD-worklets-1-20160607/"
+},
+{
+  "name": "cascading style sheets level 2 revision 2 (css 2.2) specification",
+  "url": "http://www.w3.org/TR/2016/WD-CSS22-20160412/"
+},
+{
+  "name": "css device adaptation module level 1",
+  "url": "http://www.w3.org/TR/2016/WD-css-device-adapt-1-20160329/"
+},
+{
+  "name": "css object model (cssom)",
+  "url": "http://www.w3.org/TR/2016/WD-cssom-1-20160317/"
+},
+{
+  "name": "cssom view module",
+  "url": "http://www.w3.org/TR/2016/WD-cssom-view-1-20160317/"
+},
+{
+  "name": "css custom properties for cascading variables module level 1",
+  "url": "http://www.w3.org/TR/2015/CR-css-variables-1-20151203/"
+},
+{
+  "name": "css will change module level 1",
+  "url": "http://www.w3.org/TR/2015/CR-css-will-change-1-20151203/"
+},
+{
+  "name": "css snapshot 2015",
+  "url": "http://www.w3.org/TR/2015/NOTE-css-2015-20151013/"
+},
+{
+  "name": "css page floats",
+  "url": "http://www.w3.org/TR/2015/WD-css-page-floats-3-20150915/"
+},
+{
+  "name": "priorities for css from the digital publishing interest group",
+  "url": "http://www.w3.org/TR/2015/WD-dpub-css-priorities-20150820/"
+},
+{
+  "name": "requirements for hangul text layout and typography 한국어 텍스트 레이아웃 및 타이포그래피를 위한 요구사항",
+  "url": "http://www.w3.org/TR/2015/WD-klreq-20150723/"
+},
+{
+  "name": "additional requirements for bidi in html & css",
+  "url": "http://www.w3.org/TR/2015/NOTE-html-bidi-20150721/"
+},
+{
+  "name": "css template layout module",
+  "url": "http://www.w3.org/TR/2015/NOTE-css-template-3-20150326/"
+},
+{
+  "name": "css exclusions module level 1",
+  "url": "http://www.w3.org/TR/2015/WD-css3-exclusions-20150115/"
+},
+{
+  "name": "compositing and blending level 1",
+  "url": "http://www.w3.org/TR/2015/CR-compositing-1-20150113/"
+},
+{
+  "name": "fullscreen",
+  "url": "http://www.w3.org/TR/2014/NOTE-fullscreen-20141118/"
+},
+{
+  "name": "css tv profile 1.0",
+  "url": "http://www.w3.org/TR/2014/NOTE-css-tv-20141014/"
+},
+{
+  "name": "css presentation levels module",
+  "url": "http://www.w3.org/TR/2014/NOTE-css3-preslev-20141014/"
+},
+{
+  "name": "behavioral extensions to css",
+  "url": "http://www.w3.org/TR/2014/NOTE-becss-20141014/"
+},
+{
+  "name": "the css ‘reader’ media type",
+  "url": "http://www.w3.org/TR/2014/NOTE-css3-reader-20141014/"
+},
+{
+  "name": "css3 hyperlink presentation module",
+  "url": "http://www.w3.org/TR/2014/NOTE-css3-hyperlinks-20141014/"
+},
+{
+  "name": "css mobile profile 2.0",
+  "url": "http://www.w3.org/TR/2014/NOTE-css-mobile-20141014/"
+},
+{
+  "name": "css marquee module level 3",
+  "url": "http://www.w3.org/TR/2014/NOTE-css3-marquee-20141014/"
+},
+{
+  "name": "css regions module level 1",
+  "url": "http://www.w3.org/TR/2014/WD-css-regions-1-20141009/"
+},
+{
+  "name": "css line grid module level 1",
+  "url": "http://www.w3.org/TR/2014/WD-css-line-grid-1-20140916/"
+},
+{
+  "name": "css masking module level 1",
+  "url": "http://www.w3.org/TR/2014/CR-css-masking-1-20140826/"
+},
+{
+  "name": "css font loading module level 3",
+  "url": "http://www.w3.org/TR/2014/WD-css-font-loading-3-20140522/"
+},
+{
+  "name": "css generated content for paged media module",
+  "url": "http://www.w3.org/TR/2014/WD-css-gcpm-3-20140513/"
+},
+{
+  "name": "svg integration",
+  "url": "http://www.w3.org/TR/2014/WD-svg-integration-20140417/"
+},
+{
+  "name": "css scoping module level 1",
+  "url": "http://www.w3.org/TR/2014/WD-css-scoping-1-20140403/"
+},
+{
+  "name": "css shapes module level 1",
+  "url": "http://www.w3.org/TR/2014/CR-css-shapes-1-20140320/"
+},
+{
+  "name": "css namespaces module level 3",
+  "url": "http://www.w3.org/TR/2014/REC-css-namespaces-3-20140320/"
+},
+{
+  "name": "css style attributes",
+  "url": "http://www.w3.org/TR/2013/REC-css-style-attr-20131107/"
+},
+{
+  "name": "selectors api level 2",
+  "url": "http://www.w3.org/TR/2013/NOTE-selectors-api2-20131017/"
+},
+{
+  "name": "css conditional rules module level 3",
+  "url": "http://www.w3.org/TR/2013/CR-css3-conditional-20130404/"
+},
+{
+  "name": "css print profile",
+  "url": "http://www.w3.org/TR/2013/NOTE-css-print-20130314/"
+},
+{
+  "name": "selectors api level 1",
+  "url": "http://www.w3.org/TR/2013/REC-selectors-api-20130221/"
+},
+{
+  "name": "media queries",
+  "url": "http://www.w3.org/TR/2012/REC-css3-mediaqueries-20120619/"
+},
+{
+  "name": "requirements for japanese text layout",
+  "url": "http://www.w3.org/TR/2012/NOTE-jlreq-20120403/"
+},
+{
+  "name": "a mathml for css profile",
+  "url": "http://www.w3.org/TR/2011/REC-mathml-for-css-20110607/"
+},
+{
+  "name": "cascading style sheets level 2 revision 1 (css 2.1) specification",
+  "url": "http://www.w3.org/TR/2011/REC-CSS2-20110607/"
+},
+{
+  "name": "cascading style sheets (css) snapshot 2010",
+  "url": "http://www.w3.org/TR/2011/NOTE-css-2010-20110512/"
+},
+{
+  "name": "cascading style sheets (css) snapshot 2007",
+  "url": "http://www.w3.org/TR/2011/NOTE-css-beijing-20110512/"
+},
+{
+  "name": "associating style sheets with xml documents 1.0 (second edition)",
+  "url": "http://www.w3.org/TR/2010/REC-xml-stylesheet-20101028/"
+},
+{
+  "name": "ruby annotation",
+  "url": "http://www.w3.org/TR/2001/REC-ruby-20010531/"
+},
+{
+  "name": "document object model (dom) level 2 style specification",
+  "url": "http://www.w3.org/TR/2000/REC-DOM-Level-2-Style-20001113/"
+},
+{
+  "name": "css techniques for web content accessibility guidelines 1.0",
+  "url": "http://www.w3.org/TR/2000/NOTE-WCAG10-CSS-TECHS-20001106/"
+},
+{
+  "name": "positioning html elements with cascading style sheets",
+  "url": "http://www.w3.org/TR/1999/WD-positioning-19990902"
+},
+{
+  "name": "aural cascading style sheets (acss) specification",
+  "url": "http://www.w3.org/TR/1999/WD-acss-19990902"
+},
+{
+  "name": "css printing extensions",
+  "url": "http://www.w3.org/TR/1999/WD-print-19990902"
+},
+{
+  "name": "list of suggested extensions to css",
+  "url": "http://www.w3.org/TR/1998/NOTE-CSS-potential-19981210"
+}]
