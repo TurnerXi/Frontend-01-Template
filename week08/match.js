@@ -8,6 +8,7 @@ function isMatch(selector, element) {
     while (selectors.length > 0 && temp) {
       let combinator = combinators.pop();
       compoundSelector = selectors.pop();
+      console.log(combinator, compoundSelector);
       if (/~(?!=)/.test(combinator)) {
         temp = isMatchSibling(compoundSelector, temp);
       } else if (/>/.test(combinator)) {
@@ -73,7 +74,7 @@ function isMatchCompound(compoundSelector, element) {
 }
 
 function isMatchSibling(compoundSelector, element) {
-  let children = element.parentElement.children;
+  let children = Array.prototype.slice.call(element.parentElement.children);
   let idx = children.indexOf(element);
   for (let i = 0; i < idx; i++) {
     if (isMatchCompound(compoundSelector, children[i])) {
