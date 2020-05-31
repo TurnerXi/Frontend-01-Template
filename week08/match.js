@@ -1,7 +1,7 @@
 function isMatch(selector, element) {
-  const regex = /(\s?>\s?)|(\s?~(?!=)\s?)|(\s?\|\|\s?)|(\s+)/g;
+  const regex = /(?:\s*>\s*)|(?:\s*~(?!=)\s*)|(?:\s*\|\|\s*)|(?:\s+)/g;
   const combinators = selector.match(regex) || [];
-  const selectors = selector.split(regex);
+  const selectors = selector.split(regex).filter(Boolean);
   let temp = element;
   let compoundSelector = selectors.pop();
   if (isMatchCompound(compoundSelector, temp)) {
@@ -73,7 +73,7 @@ function isMatchCompound(compoundSelector, element) {
 }
 
 function isMatchSibling(compoundSelector, element) {
-  let children = element.parent.children;
+  let children = element.parentElement.children;
   let idx = children.indexOf(element);
   for (let i = 0; i < idx; i++) {
     if (isMatchCompound(compoundSelector, children[i])) {
@@ -84,21 +84,21 @@ function isMatchSibling(compoundSelector, element) {
 }
 
 function isMatchParent(compoundSelector, element) {
-  let parent = element.parent;
+  let parent = element.parentElement;
   return isMatchCompound(compoundSelector, parent) ? parent : null;
 }
 
 function isMatchColumn(compoundSelector, element) {
-  return element.parent;
+  return element.parentElement;
 }
 
 function isMatchAncestor(compoundSelector, element) {
-  let parent = element.parent
+  let parent = element.parentElement
   while (parent != null) {
     if (isMatchCompound(compoundSelector, parent)) {
       return parent;
     } else {
-      parent = parent.parent;
+      parent = parent.parentElement;
     }
   }
   return null;
