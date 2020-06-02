@@ -8,7 +8,6 @@ function isMatch(selector, element) {
     while (selectors.length > 0 && temp) {
       let combinator = combinators.pop();
       compoundSelector = selectors.pop();
-      console.log(combinator, compoundSelector);
       if (/~(?!=)/.test(combinator)) {
         temp = isMatchSibling(compoundSelector, temp);
       } else if (/>/.test(combinator)) {
