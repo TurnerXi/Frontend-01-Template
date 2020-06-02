@@ -14,7 +14,7 @@
 
 ### 选择器语法
 
-![selector](../images/selector.png)
+![selector](../documents/images/selector.png)
 
 - 复合选择器
   - <简单选择器><简单选择器><简单选择器>
@@ -28,7 +28,7 @@
 
 ### 选择器优先级
 
-![specificity](../images/specificity.png)
+![specificity](../documents/images/specificity.png)
 
 ```
 A = count(#)

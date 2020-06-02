@@ -12,7 +12,7 @@
 
 ### 盒模型
 
-![盒模型](../images/box-model.png)
+![盒模型](../documents/images/box-model.png)
 
 - Box-sizing: content-box
   - width = contenWIdth
