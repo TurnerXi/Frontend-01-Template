@@ -1,0 +1,238 @@
+<script>
+  let names = Object.getOwnPropertyNames(window);
+  const ECMA = ["globalThis", "console", "BigInt", "BigInt64Array", "BigUint64Array", "Infinity", "NaN", "undefined", "eval", "isFinite", "isNaN", "parseFloat", "parseInt", "decodeURI", "decodeURIComponent", "encodeURI", "encodeURIComponent", "Array", "Date", "RegExp", "Promise", "Proxy", "Map", "WeakMap", "Set", "WeakSet", "Function", "Boolean", "String", "Number", "Symbol", "Object", "Error", "EvalError", "RangeError", "ReferenceError", "SyntaxError", "TypeError", "URIError", "ArrayBuffer", "SharedArrayBuffer", "DataView", "Float32Array", "Float64Array", "Int8Array", "Int16Array", "Int32Array", "Uint8Array", "Uint16Array", "Uint32Array", "Uint8ClampedArray", "Atomics", "JSON", "Math", "Reflect", "escape", "unescape"];
+  const NODE = [];
+  const RTC = [];
+  const IDB = [];
+  const Geolocation = [];
+  const Gamepad = [];
+  const XPath = [];
+  const Performance = [];
+  const SVG = [];
+  const Events = [];
+  const CSSTOM = ["CSSStyleValue", "CSSStyleDeclaration", "CSSUnparsedValue", "CSSVariableReferenceValue", "CSSUnitValue", "CSSMathSum", "CSSKeywordValue", "CSSTransformValue", "CSSPositionValue", "CSSNumericValue", "CSSURLImageValue", "CSSImageValue", "CSSStyleRule", "CSSMathValue", "CSSMathNegate", "CSSMathProduct", "CSSMathInvert", "CSSMathMin", "CSSMathMax", "CSSNumericType", "CSSMathOperator", "CSSNumericArray", "CSSTransformComponent", "CSSTranslate", "CSSRotate", "CSSScale", "CSSSkew", "CSSSkewX", "CSSSkewY", "CSSPerspective", "CSSMatrixComponent", "CSSResourceValue"]
+  const CSSOM = [];
+
+  function filterOut(names, props) {
+    let set = new Set();
+    props.forEach(o => set.add(o));
+    return names.filter(e => !set.has(e));
+  }
+
+  function filterTo(names, PRE, arr) {
+    return names.filter(e => {
+      try {
+        if (e.indexOf(PRE) !== 0) {
+          return true;
+        } else {
+          arr.push(e);
+          return false;
+        }
+      } catch (err) {
+        return true;
+      }
+    })
+  }
+
+  // ECMA 262
+  {
+    let js = new Set();
+    let objects = ECMA;
+    objects.forEach(o => js.add(o));
+    names = names.filter(e => !js.has(e));
+
+  }
+
+
+  names = names.filter(e => {
+    try {
+      if (!(window[e].prototype instanceof Node)) {
+        return true;
+      } else {
+        NODE.push(e);
+        return false;
+      }
+    } catch (err) {
+      return true;
+    }
+  }).filter(e => e != "Node");
+
+
+  names = names.filter(e => !e.match(/^on/))
+
+  names = names.filter(e => !e.match(/^webkit/i))
+
+
+  //https://html.spec.whatwg.org/#window
+
+  {
+    let windowprops = new Set();
+    let objects = ["window", "self", "document", "name", "location", "history", "customElements", "locationbar", "menubar", " personalbar", "scrollbars", "statusbar", "toolbar", "status", "close", "closed", "stop", "focus", " blur", "frames", "length", "top", "opener", "parent", "frameElement", "open", "navigator", "applicationCache", "alert", "confirm", "prompt", "print", "postMessage", "console", "DOMParser", "DOMParserSupportedType"];
+    objects.forEach(o => windowprops.add(o));
+    names = names.filter(e => !windowprops.has(e));
+  }
+
+  //https://html.spec.whatwg.org/
+
+  {
+    let interfaces = new Set();
+    objects = ["ApplicationCache", "AudioTrack", "AudioTrackList", "BarProp", "BeforeUnloadEvent", "BroadcastChannel", "CanvasGradient", "CanvasPattern", "CanvasRenderingContext2D", "CloseEvent", "CustomElementRegistry", "DOMStringList", "DOMStringMap", "DataTransfer", "DataTransferItem", "DataTransferItemList", "DedicatedWorkerGlobalScope", "Document", "DragEvent", "ErrorEvent", "EventSource", "External", "FormDataEvent", "HTMLAllCollection", "HashChangeEvent", "History", "ImageBitmap", "ImageBitmapRenderingContext", "ImageData", "Location", "MediaError", "MessageChannel", "MessageEvent", "MessagePort", "MimeType", "MimeTypeArray", "Navigator", "OffscreenCanvas", "OffscreenCanvasRenderingContext2D", "PageTransitionEvent", "Path2D", "Plugin", "PluginArray", "PopStateEvent", "PromiseRejectionEvent", "RadioNodeList", "SharedWorker", "SharedWorkerGlobalScope", "Storage", "StorageEvent", "TextMetrics", "TextTrack", "TextTrackCue", "TextTrackCueList", "TextTrackList", "TimeRanges", "TrackEvent", "ValidityState", "VideoTrack", "VideoTrackList", "WebSocket", "Window", "Worker", "WorkerGlobalScope", "WorkerLocation", "WorkerNavigator"];
+    objects.forEach(o => interfaces.add(o));
+
+    names = names.filter(e => !interfaces.has(e));
+  }
+
+  //http://www.ecma-international.org/ecma-402/5.0/index.html#Title
+
+  names = names.filter(e => e != "Intl")
+
+  //https://www.khronos.org/registry/webgl/specs/latest/1.0/#5.15
+
+  names = filterOut(names, ["WebGLVertexArrayObject", "WebGLTransformFeedback", "WebGLSync", "WebGLSampler", "WebGLQuery", "WebGL2RenderingContext", "WebGLContextEvent", "WebGLObject", "WebGLBuffer", "WebGLFramebuffer", "WebGLProgram", "WebGLRenderbuffer", "WebGLShader", "WebGLTexture", "WebGLUniformLocation", "WebGLActiveInfo", "WebGLShaderPrecisionFormat", "WebGLRenderingContext"]);
+
+  //https://www.w3.org/TR/webaudio/
+
+  names = filterOut(names, ["AudioContext", "AudioNode", "AnalyserNode", "AudioBuffer", "AudioBufferSourceNode", "AudioDestinationNode", "AudioParam", "AudioListener", "AudioWorklet", "AudioWorkletGlobalScope", "AudioWorkletNode", "AudioWorkletProcessor", "BiquadFilterNode", "ChannelMergerNode", "ChannelSplitterNode", "ConstantSourceNode", "ConvolverNode", "DelayNode", "DynamicsCompressorNode", "GainNode", "IIRFilterNode", "MediaElementAudioSourceNode", "MediaStreamAudioSourceNode", "MediaStreamTrackAudioSourceNode", "MediaStreamAudioDestinationNode", "PannerNode", "PeriodicWave", "OscillatorNode", "StereoPannerNode", "WaveShaperNode", "ScriptProcessorNode", "AudioProcessingEvent"]);
+
+  //https://encoding.spec.whatwg.org/#dom-textencoder
+
+  names = filterOut(names, ["TextDecoder", "TextEncoder", "TextDecoderStream", "TextEncoderStream"]);
+
+
+  //https://streams.spec.whatwg.org/#blqs-class
+
+  names = filterOut(names, ["ReadableStream", "ReadableStreamDefaultReader", "ReadableStreamBYOBReader", "ReadableStreamDefaultController", "ReadableByteStreamController", "ReadableStreamBYOBRequest", "WritableStream", "WritableStreamDefaultWriter", "WritableStreamDefaultController", "TransformStream", "TransformStreamDefaultController", "ByteLengthQueuingStrategy", "CountQueuingStrategy"]);
+
+
+
+  //https://wicg.github.io/BackgroundSync/spec/#sync-manager-interface
+
+  names = filterOut(names, ["SyncManager"]);
+
+  //https://www.w3.org/TR/media-source/
+  names = filterOut(names, ["MediaSource", "SourceBufferList", "SourceBuffer"]);
+
+  //https://www.w3.org/TR/screen-orientation/
+  names = filterOut(names, ["ScreenOrientation"]);
+
+  //https://www.w3.org/TR/webrtc/
+  names = filterOut(names, ["MediaStreamEvent"]);
+
+  names = filterTo(names, 'RTC', RTC);
+
+  // https://www.w3.org/TR/image-capture/
+  names = filterOut(names, ["PhotoCapabilities", "MediaSettingsRange", "ImageCapture", "OverconstrainedError"]);
+
+  //https://www.w3.org/TR/webaudio/
+  names = filterOut(names, ["OfflineAudioContext", "OfflineAudioCompletionEvent", "BaseAudioContext", "AudioScheduledSourceNode", "AudioParamMap"]);
+
+  //https://wicg.github.io/netinfo/
+  names = filterOut(names, ["NetworkInformation"]);
+
+  //https://www.w3.org/TR/mediacapture-streams/
+  names = filterOut(names, ["MediaStreamTrackEvent", "MediaStreamTrack", "MediaStream"]);
+  //https://www.w3.org/TR/mediacapture-fromelement/
+  names = filterOut(names, ["CanvasCaptureMediaStreamTrack"]);
+  //https://www.w3.org/TR/mediastream-recording/
+  names = filterOut(names, ["MediaRecorder", "BlobEvent"]);
+
+  //https://www.w3.org/TR/encrypted-media/
+  names = filterOut(names, ["MediaEncryptedEvent"]);
+
+  //https://w3c.github.io/media-capabilities/
+  names = filterOut(names, ["MediaCapabilities"]);
+
+  //https://www.w3.org/TR/IndexedDB/
+  names = filterTo(names, 'IDB', IDB);
+
+  //https://www.w3.org/TR/geolocation-API/
+  names = filterTo(names, 'Geolocation', Geolocation);
+
+  //https://www.w3.org/TR/gamepad/
+  names = filterTo(names, 'Gamepad', Gamepad);
+
+  //https://docs.google.com/document/d/1TovyqqeC3HoO0A4UUBKiCyhZlQSl7jM_F7KbWjK2Gcs/edit#heading=h.y7amr11fn0tb
+  names = filterOut(names, ["DecompressionStream", "CompressionStream"]);
+
+  //https://dom.spec.whatwg.org/
+  names = filterOut(names, ["Event", "CustomEvent", "EventTarget", "AbortController", "AbortSignal", "NonElementParentNode", "DocumentOrShadowRoot", "ParentNode", "NonDocumentTypeChildNode", "ChildNode", "Slottable", "NodeList", "HTMLCollection", "MutationObserver", "MutationRecord", "Node", "Document", "XMLDocument", "DOMImplementation", "DocumentType", "DocumentFragment", "ShadowRoot", "Element", "NamedNodeMap", "Attr", "CharacterData", "Text", "CDATASection", "ProcessingInstruction", "Comment", "AbstractRange", "StaticRange", "Range", "NodeIterator", "TreeWalker", "DOMTokenList", "XPathResult", "XPathExpression", "XPathEvaluatorBase", "XPathEvaluator", "MutationEvent", "MutationNameEvent", "DOMConfiguration", "DOMError", "DOMErrorHandler", "DOMImplementationList", "DOMImplementationSource", "DOMLocator", "DOMObject", "DOMUserData", "Entity", "EntityReference", "NameList", "Notation", "TypeInfo", "UserDataHandler", "RangeException"]);
+
+  names = names.filter(e => {
+    try {
+      if (window[e].prototype instanceof window.Event) {
+        Events.push(e);
+        return false;
+      }
+    } catch (e) {}
+    return true;
+  });
+
+  //https://www.w3.org/TR/WebCryptoAPI/
+  names = filterOut(names, ["Crypto"]);
+
+  //https://www.w3.org/TR/clipboard-apis/
+  names = filterOut(names, ["ClipboardItem"]);
+
+  //https://www.w3.org/TR/battery-status/
+  names = filterOut(names, ["BatteryManager"]);
+
+  //https://www.w3.org/TR/DOM-Level-3-XPath/xpath.html
+  names = filterTo(names, 'XPath', XPath);
+
+  //https://www.w3.org/TR/DOM-Parsing/
+  names = filterOut(names, ["XMLSerializer"]);
+  //https://www.w3.org/TR/painting-timing/
+  //https://www.w3.org/TR/server-timing/
+  //https://www.w3.org/TR/resource-timing/
+  //...
+  names = filterTo(names, 'Performance', Performance);
+
+  //https://www.w3.org/TR/SVG2/
+  names = filterTo(names, 'SVG', SVG);
+
+  //https://www.w3.org/TR/css-typed-om-1/
+  names = filterOut(names, CSSTOM);
+
+  //https://drafts.csswg.org/cssom
+  names = filterOut(names, ["StyleSheetList", "StyleSheet", "CSSStyleSheet", "CSSRuleList", "CSSRule"]);
+  names = names.filter(e => {
+    try {
+      if (window[e].prototype instanceof window.CSSRule) {
+        CSSOM.push(e);
+        return false;
+      }
+    } catch (e) {}
+    return true;
+  })
+
+  //https://www.w3.org/TR/FileAPI/
+  names = filterOut(names, ["Blob", "File", "FileList", "FileReader", "FileReaderSync"]);
+  //https://url.spec.whatwg.org/
+  names = filterOut(names, ["webkitURL", "URL", "URLSearchParams"]);
+
+  //https://drafts.csswg.org/web-animations-1
+  names = filterOut(names, ["AnimationTimeline", "DocumentTimeline", "Animation", "AnimationEffect", "KeyframeEffect", "Animatable", "AnimationPlaybackEvent"]);
+
+  //https://www.w3.org/TR/geometry-1/
+  names = filterOut(names, ["DOMPointReadOnly", "SVGPoint", "DOMPoint", "DOMRectReadOnly", "SVGRect", "DOMRect", "DOMRectList", "DOMQuad", "DOMMatrixReadOnly", "SVGMatrix", "WebKitCSSMatrix", "DOMMatrix"]);
+
+  //https://xhr.spec.whatwg.org/
+  names = filterOut(names, ["XMLHttpRequestEventTarget", "XMLHttpRequestUpload", "XMLHttpRequest", "FormData", "ProgressEvent"]);
+
+  //https://www.w3.org/TR/webxr/
+  names = filterOut(names, ["XRSystem", "XRSession", "XRRenderState", "XRFrame", "XRSpace", "XRReferenceSpace", "XRBoundedReferenceSpace", "XRView", "XRViewport", "XRRigidTransform", "XRPose", "XRViewerPose", "XRInputSource", "XRInputSourceArray", "XRLayer", "XRWebGLLayer", "XRSessionEvent", "XRInputSourceEvent", "XRInputSourcesChangeEvent", "XRReferenceSpaceEvent", "XRPermissionStatus"]);
+  names = filterOut(names, ["XRTransientInputHitTestSource", "XRHitTestResult", "XRHitTestSource", "XRRay", "XRTransientInputHitTestResult"]);
+
+  //https://wicg.github.io/webusb
+  names = filterOut(names, ["USB", "USBConnectionEvent", "USBDevice", "USBInTransferResult", "USBOutTransferResult", "USBIsochronousInTransferPacket", "USBIsochronousInTransferResult", "USBIsochronousOutTransferPacket", "USBIsochronousOutTransferResult", "USBConfiguration", "USBInterface", "USBAlternateInterface", "USBEndpoint", "USBPermissionResult"]);
+
+  //https://webbluetoothcg.github.io/web-bluetooth/
+  names = filterOut(names, ["Bluetooth", "BluetoothPermissionResult", "ValueEvent", "BluetoothDevice", "BluetoothAdvertisingEvent", "BluetoothRemoteGATTServer", "BluetoothRemoteGATTService", "BluetoothRemoteGATTCharacteristic", "BluetoothCharacteristicProperties", "BluetoothRemoteGATTDescriptor", "CharacteristicEventHandlers", "BluetoothDeviceEventHandlers", "ServiceEventHandlers", "BluetoothUUID"]);
+
+  //https://www.w3.org/TR/presentation-api/
+  names = filterOut(names, ["Navigator", "Presentation", "Presentation", "Presentation", "PresentationRequest", "PresentationAvailability", "PresentationConnectionAvailableEvent", "PresentationConnection", "PresentationConnectionCloseEvent", "PresentationReceiver", "PresentationConnectionList"]);
+
+  // no specification
+  names = filterOut(names, ["BeforeInstallPromptEvent", "captureEvents", "releaseEvents"]);
+  console.log(names);
+</script>
