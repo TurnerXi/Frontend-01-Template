@@ -194,3 +194,7 @@ data:image/svg+xml,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"
 
 data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4gPGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iNTAiLz4gPC9zdmc+
 ```
+
+# 作品
+
+AI 五子棋：[https://turnerxi.github.io/Frontend-01-Template/week10/gobang.html](https://turnerxi.github.io/Frontend-01-Template/week10/gobang.html)
