@@ -123,6 +123,7 @@
         e = e || window.event;
         let distx = Math.floor(e.pageX * 2 / rect);
         let disty = Math.floor(e.pageY * 2 / rect);
+        // 插值
         while (distx != x || disty != y) {
           if (distx > x) {
             x++;

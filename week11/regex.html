@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #container {
+      background-color: #414339;
+    }
+
+    .keywords {
+      color: #b267e6;
+    }
+
+    .identifier {
+      color: #6796e6;
+    }
+
+    .punctuator {
+      color: #A6E22E;
+    }
+  </style>
+</head>
+
+<body>
+  <pre id="container"></pre>
+  <script>
+    const container = document.getElementById('container')
+    const source = `
+      function sleep(t) {
+        return new Promise(function(resolve) {
+          setTimeout(resolve, t);
+        });
+      }
+    `
+    const regex = /(function|return|new)|([ \r\t\n]+)|([a-zA-Z][a-zA-Z0-9]*)|([\{\}\(\)\,\;])/g;
+    const dictionary = ['', 'keywords', 'whitespace', 'identifier', 'punctuator'];
+    let token = null;
+    while (token = regex.exec(source)) {
+      const span = document.createElement('span');
+      span.innerText = token[0];
+      for (let i = 1; i < 5; i++) {
+        if (token[i]) {
+          span.classList.add(dictionary[i]);
+        }
+      }
+      container.appendChild(span);
+    }
+  </script>
+</body>
+
+</html>
