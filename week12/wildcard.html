@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      overflow: hidden;
+      font-family: -webkit-pictograph;
+      font-size: 64px;
+      font-weight: 700;
+    }
+
+    #source .active {
+      color: #f40;
+    }
+
+    #pattern .active {
+      color: #04f;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    source: <span id="source"></span>
+  </div>
+  <div>
+    pattern: <span id="pattern"></span>
+  </div>
+  <div>
+    result: <span id="result"></span>
+  </div>
+</body>
+<script src="./wildcard.js"></script>
+<script>
+  const $source = document.getElementById('source');
+  const $pattern = document.getElementById('pattern');
+  const source = 'abcbhcdedccdee';
+  const pattern = 'a*b?c*de*ee';
+  $source.innerHTML = source.split('').map(c => `<span>${c}</span>`).join('');
+  $pattern.innerHTML = pattern.split('').map(c => `<span>${c}</span>`).join('');
+
+  function sleep(t) {
+    return new Promise(resolve => setTimeout(resolve, t));
+  }
+  (async function () {
+    let result = wildcard(source, pattern);
+    let next = result.next();
+    while (!next.done) {
+      let [x, y] = next.value;
+      await sleep(300);
+      $source.children[x].classList.add('active');
+      $pattern.children[y].classList.add('active');
+      next = result.next();
+    }
+    document.getElementById('result').innerHTML = next.value ? '⭕' : '❌';
+  }())
+</script>
+
+</html>

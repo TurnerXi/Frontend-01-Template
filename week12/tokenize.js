@@ -8,6 +8,7 @@ function* tokenize(source) {
     for (let i = 0; i < dictionary.length; i++) {
       if (result[i + 1]) {
         yield {
+          index: result.index,
           value: result[i + 1],
           type: dictionary[i]
         }
@@ -126,11 +127,20 @@ function MultiplicativeExpression(token) {
   return MultiplicativeExpression;
 }
 
-let state = Expression;
-for (let token of tokenize('0 +  1 * (2 + 3) * 4')) {
-  if (token.type === 'Whitespace') continue;
-  if (token.type === 'LineTerminator') continue;
-  state = state(token);
+function* AST(source) {
+  let state = Expression;
+  let tk = null;
+  for (let token of tokenize(source)) {
+    yield { stack, token };
+    if (token.type === 'Whitespace') continue;
+    if (token.type === 'LineTerminator') continue;
+    state = state(token);
+    tk = token;
+  }
+  yield { stack, token: tk };
+  return stack[0];
 }
 
-console.log(stack);
+// for (const item of AST('0 +  1 * (2 + 3) * 4')) {
+//   console.log(item);
+// }
