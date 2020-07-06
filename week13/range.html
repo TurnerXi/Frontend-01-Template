@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #block {
+      display: inline-block;
+      width: 200px;
+      height: 200px;
+      background-color: cyan;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container">
+    文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字
+  </div>
+  <div id="block">
+
+  </div>
+  <script>
+    const block = document.getElementById('block');
+    const container = document.getElementById('container');
+    const ranges = [];
+
+    for (let i = 0; i < container.childNodes[0].textContent.length; i++) {
+      const range = document.createRange();
+      range.setStart(container.childNodes[0], i);
+      range.setEnd(container.childNodes[0], i);
+      ranges.push(range);
+    }
+
+    function neareast(x, y) {
+      let minIdx = -1;
+      let min = Infinity;
+      for (let i = 0; i < ranges.length; i++) {
+        const rect = ranges[i].getClientRects()[0];
+        if (!rect) continue;
+        const distance = (x - rect.left) ** 2 + (y - rect.top) ** 2;
+        if (distance < min) {
+          min = distance;
+          minIdx = i;
+        }
+      }
+      return ranges[minIdx];
+    }
+
+    function mousedown(e) {
+      let x = 0;
+      let y = 0;
+      let startX = e.pageX;
+      let startY = e.pageY;
+
+      if (e.target === block) {
+        e.preventDefault();
+        x = Number(block.dataset.x) || 0;
+        y = Number(block.dataset.y) || 0;
+        document.addEventListener('mousemove', mousemove);
+        document.addEventListener('mouseup', mouseup);
+      }
+
+      function mousemove(e) {
+        let moveX = e.pageX - startX;
+        let moveY = e.pageY - startY;
+        startX = e.pageX;
+        startY = e.pageY;
+
+        x += moveX;
+        y += moveY;
+
+        block.dataset.x = x;
+        block.dataset.y = y;
+
+        const range = neareast(e.pageX, e.pageY);
+        range.insertNode(block);
+        // block.style.transform = `translate(${x}px,${y}px)`;
+      }
+
+      function mouseup(e) {
+        document.removeEventListener('mousemove', mousemove);
+        document.removeEventListener('mouseup', mouseup);
+      }
+    }
+
+    document.addEventListener('mousedown', mousedown);
+  </script>
+</body>
+
+</html>

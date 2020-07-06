@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+      text-align: center;
+    }
+
+    #block {
+      width: 300px;
+      height: 300px;
+      line-height: 300px;
+      margin: 20px auto;
+      background-color: #000;
+    }
+
+    input {
+      width: 255px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="block">
+
+  </div>
+  <label for="r">R</label><input id="r" type="range" min="0" max="255" value="0" />
+  <br />
+  <label for="g">G</label><input id="g" type="range" min="0" max="255" value="0" />
+  <br />
+  <label for="b">B</label><input id="b" type="range" min="0" max="255" value="0" />
+  <br />
+  <script src="./reactivity.js"></script>
+  <script>
+    const block = document.getElementById('block');
+
+    const color = reactivity({ r: 0, b: 0, g: 0 });
+    document.getElementById('r').addEventListener('input', (e) => {
+      color.r = e.target.value;
+    })
+    document.getElementById('g').addEventListener('input', (e) => {
+      color.g = e.target.value;
+    })
+    document.getElementById('b').addEventListener('input', (e) => {
+      color.b = e.target.value;
+    })
+
+    function toHex(num) {
+      return parseInt(num).toString(16).padStart(2, '0').toUpperCase();
+    }
+
+    effect(() => {
+      block.style.backgroundColor = `rgb(${color.r},${color.g},${color.b})`;
+      block.style.color = `rgb(${255-color.r},${255-color.g},${255-color.r})`
+      block.innerText = `#${toHex(color.r)}${toHex(color.g)}${toHex(color.b)}`
+    })
+  </script>
+</body>
+
+</html>
