@@ -1,0 +1,24 @@
+<template>
+  <div style="width:500px;height:300px;margin:auto;background:red;">
+    <img />
+  </div>
+</template>
+<script>
+  export default {
+    el: '#example',
+    data: {
+      message: 'Hello'
+    },
+    computed: {
+      // a computed getter
+      reversedMessage: function () {
+        // `this` points to the vm instance
+        let i = 1;
+        while (i < 100) {
+          i++;
+        }
+        return this.message.split('').reverse().join('')
+      }
+    }
+  }
+</script>
