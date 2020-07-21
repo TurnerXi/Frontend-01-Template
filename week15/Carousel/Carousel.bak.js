@@ -1,4 +1,6 @@
 
+import { TimeLine, Animation } from '../Animation/animation';
+
 const style = {
   width: '500px',
   height: '300px',
