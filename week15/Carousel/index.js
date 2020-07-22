@@ -25,7 +25,7 @@ export default class App {
     return (
       <div>
         <Carousel autoplay={autoplay} datas={datas} />
-        <button onClick={this.toggleAutoPlay.bind(this)} style="margin: 20px auto;display: block;">{autoplay ? '暂停' : '播放'}</button>
+        {/* <button onClick={this.toggleAutoPlay.bind(this)} style="margin: 20px auto;display: block;">{autoplay ? '暂停' : '播放'}</button> */}
       </div>
     )
   }
