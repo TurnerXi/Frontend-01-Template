@@ -146,7 +146,7 @@ class ColorAnimation extends Animation {
 
   setValues(values) {
     const { el, styleName, start } = this;
-    let reg = /[-+]?\d?[\.]?\d+/g
+    let reg = /[-+]?\d*\.?\d+/g
     let idx = 0;
     const value = start.replace(reg, () => {
       if (idx === 3) {
@@ -186,7 +186,7 @@ class PixelAnimation extends Animation {
   }
 
   getValues(str) {
-    let reg = /[-+]?\d?[\.]?\d+/g
+    let reg = /[-+]?\d*\.?\d+/g
     let result = null;
     let values = [];
     while (result = reg.exec(str)) {
@@ -197,7 +197,7 @@ class PixelAnimation extends Animation {
 
   setValues(values) {
     const { el, styleName, start } = this;
-    let reg = /[-+]?\d?[\.]?\d+/g
+    let reg = /[-+]?\d*\.?\d+/g
     let idx = 0;
     const value = start.replace(reg, () => values[idx++]);
     el.style[styleName] = value;
