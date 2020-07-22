@@ -28,11 +28,11 @@
 </head>
 
 <body>
-  <div id="block3"></div>
-  <div id="block"></div>
-  <div id="block2"></div>
   <button id="pause">pause</button>
   <button id="resume">resume</button>
+  <div id="block3">css ease-in</div>
+  <div id="block">easeIn</div>
+  <div id="block2">ease</div>
 
   <script type="module">
     import {TimeLine, Animation} from './animation.js';
@@ -46,7 +46,7 @@
       el: block,
       styleName: 'transform',
       start: 'translate(0px,0px)',
-      end: 'translate(500px,0px)',
+      end: 'translate(500px,100px)',
       duration: 5,
       timingFunc: 'easeIn'
     })
@@ -55,7 +55,7 @@
       el: block2,
       styleName: 'transform',
       start: 'translate(0px,0px)',
-      end: 'translate(500px,0px)',
+      end: 'translate(500px,100px)',
       duration: 5
     })
 
@@ -72,7 +72,7 @@
     timeLine.add(animation3)
 
     timeLine.start();
-    block3.style.transform = 'translate(500px,0px)';
+    block3.style.transform = 'translate(500px,100px)';
 
     setTimeout(() => {
       timeLine.add(animation2,false);
