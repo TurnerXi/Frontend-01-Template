@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    html,
+    body {
+      height: 100%;
+    }
+
+    #block {
+      width: 100px;
+      height: 100px;
+      background-color: #f00;
+      border-radius: 50%;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="block"></div>
+  <script src="./index.js"></script>
+  <script>
+    let block = document.getElementById('block')
+    enableGesture(block);
+    let x = 0,
+      y = 0,
+      requestID = null
+    block.addEventListener('start', () => {
+      cancelAnimationFrame(requestID);
+    })
+    block.addEventListener('pan', ({ startX, startY, pageX, pageY }) => {
+      block.style.transform = `translate(${x + pageX - startX}px,${y + pageY - startY}px)`;
+    })
+    block.addEventListener('panend', ({ startX, startY, pageX, pageY, speed, speedX, speedY, isFlick }) => {
+      x += pageX - startX;
+      y += pageY - startY;
+      block.style.transform = `translate(${x}px,${y}px)`;
+      if (isFlick) {
+        slide(block, speedX, speedY, 0.2, 0.2, x, y);
+      }
+    })
+
+    function slide(el, vx, vy, ax, ay, startX, startY) {
+      x = startX + vx;
+      y = startY + vy;
+      el.style.transform = `translate(${x}px,${y}px)`;
+
+      ax = -vx * Math.abs(ax) / Math.abs(vx);
+      ay = -vy * Math.abs(ay) / Math.abs(vy);
+
+      if (Math.abs(vx) >= Math.abs(ax)) {
+        vx -= ax;
+      } else {
+        vx = 0;
+      }
+      if (Math.abs(vy) >= Math.abs(ay)) {
+        vy -= ay;
+      } else {
+        vy = 0;
+      }
+
+      let { left, right, top, bottom } = el.parentElement.getBoundingClientRect();
+      if (x >= right || x <= left) {
+        vx = -vx;
+      }
+      if (y >= bottom || y <= top) {
+        vy = -vy;
+      }
+
+      if (vx !== 0 || vy !== 0) {
+        requestID = requestAnimationFrame(() => {
+          slide(el, vx, vy, ax, ay, x, y);
+        })
+      }
+    }
+  </script>
+</body>
+
+</html>

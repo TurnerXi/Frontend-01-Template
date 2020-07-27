@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #block {
+      width: 100px;
+      height: 100px;
+      background-color: cyan;
+      text-align: center;
+      line-height: 100px;
+      color: #fff;
+    }
+
+    #block2 {
+      width: 100px;
+      height: 100px;
+      background-color: cyan;
+      text-align: center;
+      line-height: 100px;
+      color: #fff;
+    }
+
+    #block3 {
+      width: 100px;
+      height: 100px;
+      background-color: cyan;
+      transition: transform ease-in 5s;
+      text-align: center;
+      line-height: 100px;
+      color: #fff;
+    }
+  </style>
+</head>
+
+<body>
+  <button id="pause">pause</button>
+  <button id="resume">resume</button>
+  <div id="block3">css ease-in</div>
+  <div id="block">easeIn</div>
+  <div id="block2">ease</div>
+
+  <script type="module">
+    import {TimeLine, Animation} from './animation.js';
+    let block = document.getElementById('block')
+    let block2 = document.getElementById('block2')
+    let block3 = document.getElementById('block3')
+
+    let timeLine = new TimeLine();
+
+    let animation = Animation.create({
+      el: block,
+      styleName: 'transform',
+      start: 'translate(0px,0px)',
+      end: 'translate(500px,100px)',
+      duration: 5,
+      timingFunc: 'easeIn'
+    })
+
+    let animation2 = Animation.create({
+      el: block2,
+      styleName: 'transform',
+      start: 'translate(0px,0px)',
+      end: 'translate(500px,100px)',
+      duration: 5
+    })
+
+    let animation3 = Animation.create({
+      el: block,
+      styleName: 'backgroundColor',
+      start: 'rgba(122,0,255,.1)',
+      end: 'rgba(0,255,255,1)',
+      duration: 5,
+      timingFunc: 'ease'
+    })
+
+    timeLine.add(animation)
+    timeLine.add(animation3)
+
+    timeLine.start();
+    block3.style.transform = 'translate(500px,100px)';
+
+    setTimeout(() => {
+      timeLine.add(animation2,false);
+    }, 2000);
+
+    document.getElementById('pause').addEventListener('click',()=>{
+      timeLine.pause();
+    })
+    document.getElementById('resume').addEventListener('click',()=>{
+      timeLine.resume();
+    })
+  </script>
+</body>
+
+</html>
