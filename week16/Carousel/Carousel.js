@@ -5,7 +5,7 @@ import { enableGesture } from '../gesture';
 const style = {
   width: '500px',
   height: '300px',
-  backgroundColor: '#ffff00',
+  backgroundColor: '#fff',
   whiteSpace: 'nowrap',
   overflow: 'hidden',
   outline: '1px solid cyan',
@@ -204,10 +204,14 @@ export default class Carousel {
     let offsetX = pageX - startX + offset;
 
     let direction = 0;
-    if (offsetX > container.offsetWidth / 2) {
-      direction = 1;
-    } else if (offsetX < -container.offsetWidth / 2) {
-      direction = -1;
+    if (isFlick) {
+      direction = pageX > startX ? 1 : -1;
+    } else {
+      if (offsetX > container.offsetWidth / 2) {
+        direction = 1;
+      } else if (offsetX < -container.offsetWidth / 2) {
+        direction = -1;
+      }
     }
 
     this.timeLine.add(Animation.create({
@@ -233,10 +237,9 @@ export default class Carousel {
       end: `translateX(${- container.offsetWidth * (nextPosition - 1 - direction)}px)`,
       duration: .5
     }));
-
     this.timer = setTimeout(() => {
       this.activeIndex = (curPosition - direction + size) % size;
       this.startPlay();
-    }, 1000);
+    }, isFlick ? 3000 : 500);
   }
 }

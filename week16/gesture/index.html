@@ -39,9 +39,9 @@
       x += pageX - startX;
       y += pageY - startY;
       block.style.transform = `translate(${x}px,${y}px)`;
-      if (isFlick) {
-        slide(block, speedX, speedY, 0.2, 0.2, x, y);
-      }
+      // if (isFlick) {
+      //   slide(block, speedX, speedY, 0.2, 0.2, x, y);
+      // }
     })
 
     function slide(el, vx, vy, ax, ay, startX, startY) {
