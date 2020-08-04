@@ -1,0 +1,13 @@
+{
+  "name": "generator-turner",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "files": [
+    "app",
+    "router"
+  ],
+  "dependencies": {
+    "yeoman-generator": "^4.11.0"
+  }
+}
