@@ -2,3 +2,4 @@
 .idea
 .vscode/launch.json
 node_modules
+.nyc_output
