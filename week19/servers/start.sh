@@ -1,0 +1,3 @@
+#!/bin/bash
+pm2 start /home/web-server/bin/www
+pm2 start /home/publish-server/index.js
